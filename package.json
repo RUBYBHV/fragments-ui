@@ -1,0 +1,19 @@
+{
+  "name": "fragments-ui",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel index.html --port 1234",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "oidc-client-ts": "^3.5.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  }
+}
