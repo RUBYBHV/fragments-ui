@@ -7,7 +7,7 @@ async function init() {
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
   const getFragmentsBtn = document.querySelector('#get-fragments');
-  const fragmentsData = document.querySelector('#fragments-data');
+  const fragmentsContainer = document.querySelector('#fragments-container');
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -37,9 +37,35 @@ async function init() {
   logoutBtn.hidden = false;
 
   getFragmentsBtn.onclick = async () => {
+    // Clear previous results
+    fragmentsContainer.innerHTML = '';
+    
     // Do an authenticated request to the fragments API server and log the result
-    const userFragments = await getUserFragments(user);
-    fragmentsData.innerText = JSON.stringify(userFragments, null, 2);
+    const response = await getUserFragments(user);
+    const fragments = response.fragments || [];
+
+    if (fragments.length === 0) {
+      fragmentsContainer.innerHTML = '<div class="empty-state">No fragments found. Create one to get started!</div>';
+      return;
+    }
+
+    fragments.forEach(fragment => {
+      const card = document.createElement('div');
+      card.className = 'fragment-card';
+      
+      const dateUpdated = new Date(fragment.updated).toLocaleString();
+      
+      card.innerHTML = `
+        <div class="fragment-type">${fragment.type}</div>
+        <div class="fragment-id">ID: ${fragment.id}</div>
+        <div class="fragment-meta">
+          <span>Size: ${fragment.size} bytes</span>
+          <span>${dateUpdated}</span>
+        </div>
+      `;
+      
+      fragmentsContainer.appendChild(card);
+    });
   };
 }
 
