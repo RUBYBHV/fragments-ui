@@ -40,12 +40,27 @@ async function init() {
 
   postFragmentBtn.onclick = async () => {
     const data = fragmentDataInput.value;
-    if (!data) return;
+    if (!data) {
+      alert('Please enter some text for your fragment first!');
+      return;
+    }
     
-    await postFragment(user, data);
-    fragmentDataInput.value = '';
-    // refresh the fragments list
-    getFragmentsBtn.click();
+    postFragmentBtn.disabled = true;
+    postFragmentBtn.innerText = 'Posting...';
+    
+    try {
+      const res = await postFragment(user, data);
+      if (res.error) {
+        alert('Error posting fragment: ' + res.error);
+      } else {
+        fragmentDataInput.value = '';
+        // refresh the fragments list
+        getFragmentsBtn.click();
+      }
+    } finally {
+      postFragmentBtn.disabled = false;
+      postFragmentBtn.innerText = 'POST Fragment';
+    }
   };
 
   getFragmentsBtn.onclick = async () => {
