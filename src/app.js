@@ -1,5 +1,5 @@
 import { signIn, signOut, getUser } from './auth';
-import { getUserFragments } from './api';
+import { getUserFragments, postFragment } from './api';
 
 async function init() {
   // Get our UI elements
@@ -7,6 +7,8 @@ async function init() {
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
   const getFragmentsBtn = document.querySelector('#get-fragments');
+  const postFragmentBtn = document.querySelector('#post-fragment');
+  const fragmentDataInput = document.querySelector('#fragment-data');
   const fragmentsContainer = document.querySelector('#fragments-container');
 
   // Wire up event handlers to deal with login and logout.
@@ -35,6 +37,16 @@ async function init() {
   loginBtn.disabled = true;
   loginBtn.hidden = true;
   logoutBtn.hidden = false;
+
+  postFragmentBtn.onclick = async () => {
+    const data = fragmentDataInput.value;
+    if (!data) return;
+    
+    await postFragment(user, data);
+    fragmentDataInput.value = '';
+    // refresh the fragments list
+    getFragmentsBtn.click();
+  };
 
   getFragmentsBtn.onclick = async () => {
     // Clear previous results

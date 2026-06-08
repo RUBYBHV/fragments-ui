@@ -25,3 +25,27 @@ export async function getUserFragments(user) {
     return { error: err.message };
   }
 }
+
+export async function postFragment(user, fragmentData) {
+  console.log('Posting user fragment data...');
+  try {
+    const fragmentsUrl = new URL('/v1/fragments', apiUrl);
+    const res = await fetch(fragmentsUrl, {
+      method: 'POST',
+      headers: {
+        ...user.authorizationHeaders(),
+        'Content-Type': 'text/plain',
+      },
+      body: fragmentData,
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log('Successfully posted user fragment data', { data });
+    return data;
+  } catch (err) {
+    console.error('Unable to call POST /v1/fragment', { err });
+    return { error: err.message };
+  }
+}
