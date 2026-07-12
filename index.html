@@ -16,7 +16,13 @@
     </section>
     <section hidden id="user">
       <h2>Welcome <span class="username"></span>!</h2>
-      <div style="margin-bottom: 20px;">
+        <select id="fragment-type">
+          <option value="text/plain">Text (text/plain)</option>
+          <option value="text/markdown">Markdown (text/markdown)</option>
+          <option value="text/html">HTML (text/html)</option>
+          <option value="application/json">JSON (application/json)</option>
+        </select>
+        <br/><br/>
         <textarea id="fragment-data" rows="4" cols="50" placeholder="Enter fragment text..."></textarea><br/>
         <button id="post-fragment">POST Fragment</button>
       </div>

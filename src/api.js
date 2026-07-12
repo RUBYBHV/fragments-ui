@@ -26,7 +26,7 @@ export async function getUserFragments(user) {
   }
 }
 
-export async function postFragment(user, fragmentData) {
+export async function postFragment(user, fragmentData, type = 'text/plain') {
   console.log('Posting user fragment data...');
   try {
     const fragmentsUrl = new URL('/v1/fragments', apiUrl);
@@ -34,7 +34,7 @@ export async function postFragment(user, fragmentData) {
       method: 'POST',
       headers: {
         ...user.authorizationHeaders(),
-        'Content-Type': 'text/plain',
+        'Content-Type': type,
       },
       body: fragmentData,
     });

@@ -9,6 +9,7 @@ async function init() {
   const getFragmentsBtn = document.querySelector('#get-fragments');
   const postFragmentBtn = document.querySelector('#post-fragment');
   const fragmentDataInput = document.querySelector('#fragment-data');
+  const fragmentTypeSelect = document.querySelector('#fragment-type');
   const fragmentsContainer = document.querySelector('#fragments-container');
 
   // Wire up event handlers to deal with login and logout.
@@ -49,7 +50,8 @@ async function init() {
     postFragmentBtn.innerText = 'Posting...';
     
     try {
-      const res = await postFragment(user, data);
+      const type = fragmentTypeSelect.value;
+      const res = await postFragment(user, data, type);
       if (res.error) {
         alert('Error posting fragment: ' + res.error);
       } else {

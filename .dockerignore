@@ -1,0 +1,6 @@
+node_modules
+.git
+.gitignore
+.parcel-cache
+dist
+.env
