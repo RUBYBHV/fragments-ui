@@ -3,4 +3,3 @@ node_modules
 .gitignore
 .parcel-cache
 dist
-.env
